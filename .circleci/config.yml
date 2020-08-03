@@ -12,8 +12,8 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: python test_suit.py
-          name: Test
+          command: python -m unittest discover -v
+          name: run test suit
 
 workflows:
   main:
