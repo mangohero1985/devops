@@ -6,14 +6,14 @@ orbs:
 jobs:
     build-and-test:
         executor: python/default
-            steps:
-             - checkout
-             - python/load-cache
-             - python/install-deps
-             - python/save-cache
-             - run:
-                command: python -m unittest discover -v
-                name: run test suit
+        steps:
+         - checkout
+         - python/load-cache
+         - python/install-deps
+         - python/save-cache
+         - run:
+            command: python -m unittest discover -v
+            name: run test suit
 
 workflows:
     main:
