@@ -3,24 +3,24 @@ version: 2.1
 orbs:
   python: circleci/python@0.2.1
 
-  jobs:
+jobs:
     build-and-test:
         executor: python/default
             steps:
-                  - checkout
-                        - python/load-cache
-                              - python/install-deps
-                                    - python/save-cache
-                                          - run:
-                                                    command: python -m unittest discover -v
-                                                              name: run test suit
+             - checkout
+             - python/load-cache
+             - python/install-deps
+             - python/save-cache
+             - run:
+                command: python -m unittest discover -v
+                name: run test suit
 
-                                                              workflows:
-                                                                main:
-                                                                    jobs:
-                                                                          - build-and-test:
-                                                                                  filters:
-                                                                                              branches:
-                                                                                                              only:
-                                                                                                                                  dev
+workflows:
+    main:
+        jobs:
+            - build-and-test:
+                filters:
+                    branches:
+                        only:
+                            dev
                                                                                                                                         
