@@ -4,6 +4,9 @@ executors:
     databricks:
         docker:
             - image: databricksruntime/standard:latest
+        environment: 
+            PYTHON_PATH: /databricks/conda/envs/dcs-minimal/bin/python
+            PIP_PATH: /databricks/conda/envs/dcs-minimal/bin/pip
 
 
 jobs:
@@ -15,8 +18,8 @@ jobs:
          - run:
             name: unittest
             command: |
-                /databricks/conda/envs/dcs-minimal/bin/pip install -r requirements.txt
-                /databricks/conda/envs/dcs-minimal/bin/python -m unittest discover -v
+                ${PIP_PATH} install -r requirements.txt
+                ${PYTHON_PATH}-m unittest discover -v
             
 
 workflows:
