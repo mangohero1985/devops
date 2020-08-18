@@ -3,7 +3,7 @@ version: 2.1
 executors:
     databricks:
         docker:
-            - image：databricksruntime/standard:latest
+            - image: databricksruntime/standard:latest
 
 
 jobs:
