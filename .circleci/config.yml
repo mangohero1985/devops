@@ -1,19 +1,23 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@0.2.1
+executors:
+    databricks:
+        docker:
+            - image：databricksruntime/standard:latest
+
 
 jobs:
     build-and-test:
-        executor: python/default
+        executor: databricks
+        working_directory: ~/test
         steps:
          - checkout
-         - python/load-cache
-         - python/install-deps
-         - python/save-cache
          - run:
-            command: python -m unittest discover -v
-            name: run test suit
+            name: unittest
+            command: |
+                /databricks/conda/envs/dcs-minimal/bin/pip install -r requirements.txt
+                /databricks/conda/envs/dcs-minimal/bin/python -m unittest discover -v
+            
 
 workflows:
     main:
