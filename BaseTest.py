@@ -32,6 +32,7 @@ class PysparkTestCase(unittest.TestCase):
   @classmethod
   def tearDownClass(cls):
     cls.spark.stop()
+    print("pyspark unittest finished")
 
   @classmethod
   def is_dataframe_equal(cls, df1, df2):

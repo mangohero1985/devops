@@ -5,7 +5,7 @@ executors:
         docker:
             - image: databricksruntime/python-virtualenv:latest
         environment: 
-            PYTHON_PATH: /databricks/python3/bin/python
+            PYTHON_PATH: /databricks/python3/bin/python3
             PIP_PATH: /databricks/python3/bin/pip
 
 
