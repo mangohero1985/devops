@@ -35,9 +35,10 @@ jobs:
             ${COVERAGE_PATH} html --include=./*
       - store_artifacts:
           path: ./htmlcov
-#      - codecov/upload:
-#          file: ./htmlcov
-#          flags: backend
+      - codecov/upload:
+          file: './htmlcov'
+          flags: 'unittests'
+          token: '${CODECOV_TOKEN}'
 
       - slack/status:
           mentions: "weichang.chen"
