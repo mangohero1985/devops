@@ -1,3 +1,4 @@
+metastore_db/
 .coverage
 .idea/*
 __pycache__/*
