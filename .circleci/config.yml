@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.4.2
-  codecov: codecov/codecov@1.0.2
+  codecov: codecov/codecov@1.1.1
 
 executors:
   databricks:
@@ -12,6 +12,7 @@ executors:
     environment:
       PYTHON_PATH: /databricks/python3/bin/python3
       PIP_PATH: /databricks/python3/bin/pip
+      COVERAGE_PATH: /databricks/python3/bin/coverage
 
 
 jobs:
@@ -26,10 +27,17 @@ jobs:
             ${PIP_PATH} install --upgrade pip --quiet
             ${PIP_PATH} install -r requirements.txt --quiet
             ${PIP_PATH} list
-            ${PYTHON_PATH} -m unittest discover -v
-      - codecov/upload:
-          file: coverage.xml
-          flags: backend
+            ${COVERAGE_PATH} run -m unittest discover -v -s .
+      - run:
+          name: coverage check
+          command: |
+            ${COVERAGE_PATH} report -m
+            ${COVERAGE_PATH} html
+      - store_artifacts:
+          path: ./htmlcov
+#      - codecov/upload:
+#          file: ./htmlcov
+#          flags: backend
 
       - slack/status:
           mentions: "weichang.chen"
