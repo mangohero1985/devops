@@ -20,8 +20,8 @@ class PysparkTestCase(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
     cls.suppress_py4j_logging()
-    cls.spark = SparkSession.builder.master("local").getOrCreate()
-    cls.spark.sparkContext.setLogLevel('ERROR')
+    cls.spark = SparkSession.builder.getOrCreate()
+    cls.spark.sparkContext.setLogLevel('WARN')
 
   @classmethod
   def tearDownClass(cls):
@@ -30,6 +30,8 @@ class PysparkTestCase(unittest.TestCase):
   @classmethod
   def is_dataframe_equal(cls, df1, df2):
     if not df1.schema.simpleString() == df2.schema.simpleString():
+      print(df1.schema.simpleString())
+      print(df2.schema.simpleString())
       return False
 
     if df1.join(df2, df1.columns, "left_anti").count() > 0:
