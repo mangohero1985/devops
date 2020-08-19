@@ -1,0 +1,6 @@
+metastore_db/
+.coverage
+.idea/*
+__pycache__/*
+htmlcov/*
+venv/*
