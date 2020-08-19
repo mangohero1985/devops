@@ -19,7 +19,7 @@ jobs:
             name: unittest
             command: |
                 ${PIP_PATH} list
-                ${PIP_PATH} install -r requirements.txt --install-option="--with-libmemcached=/usr/local"
+                ${PIP_PATH} install -r requirements.txt --quiet
                 ${PYTHON_PATH} -m unittest discover -v             
 
 workflows:
