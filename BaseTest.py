@@ -25,8 +25,6 @@ class PysparkTestCase(unittest.TestCase):
         cls.spark.sparkContext.setLogLevel('WARN')
         for file in glob.glob('/home/jovyan/tests/*.py'):
             cls.spark.sparkContext.addPyFile(file)
-        # cls.spark.sparkContext.addPyFile('/home/jovyan/tests/test_utils.py')
-        # cls.spark.sparkContext.addPyFile('/home/jovyan/tests/utils.py')
 
     @classmethod
     def tearDownClass(cls):

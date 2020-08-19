@@ -18,8 +18,9 @@ jobs:
          - run:
             name: unittest
             command: |
-                ${PIP_PATH} list
+                ${PIP_PATH} install --upgrade pip --quiet
                 ${PIP_PATH} install -r requirements.txt --quiet
+                ${PIP_PATH} list
                 ${PYTHON_PATH} -m unittest discover -v             
 
 workflows:
