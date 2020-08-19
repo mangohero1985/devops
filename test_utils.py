@@ -9,7 +9,6 @@ import pandas as pd
 
 print("test utils")
 
-
 class UtilsTest(PysparkTestCase):
     def test_compute_similarity(self):
         arrays = [

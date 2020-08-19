@@ -2,6 +2,7 @@
 import unittest
 import logging
 import warnings
+import glob
 
 from pyspark.sql import SparkSession
 
@@ -20,8 +21,13 @@ class PysparkTestCase(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
     cls.suppress_py4j_logging()
-    cls.spark = SparkSession.builder.master('local').getOrCreate()
+    cls.spark = SparkSession.builder.master('local[2]').getOrCreate()
     cls.spark.sparkContext.setLogLevel('WARN')
+    for file in glob.glob('/home/jovyan/tests/*.py'):
+      cls.spark.sparkContext.addPyFile(file)
+    # cls.spark.sparkContext.addPyFile('/home/jovyan/tests/test_utils.py')
+    # cls.spark.sparkContext.addPyFile('/home/jovyan/tests/utils.py')
+
 
   @classmethod
   def tearDownClass(cls):
