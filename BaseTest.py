@@ -20,7 +20,7 @@ class PysparkTestCase(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
     cls.suppress_py4j_logging()
-    cls.spark = SparkSession.builder.getOrCreate()
+    cls.spark = SparkSession.builder.master('local').getOrCreate()
     cls.spark.sparkContext.setLogLevel('WARN')
 
   @classmethod
