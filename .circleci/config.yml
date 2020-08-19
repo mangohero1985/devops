@@ -33,12 +33,13 @@ jobs:
           command: |
             ${COVERAGE_PATH} report -m --include=./*
             ${COVERAGE_PATH} html --include=./*
+            ${COVERAGE_PATH} xml --include=./* -o htmlcov/coverage.xml
       - store_artifacts:
           path: ./htmlcov
       - codecov/upload:
-          file: './htmlcov'
-          flags: 'unittests'
-          token: '${CODECOV_TOKEN}'
+          file: ./htmlcov/coverage.xml
+          flags: unittests
+          token: ${CODECOV_TOKEN}
 
       - slack/status:
           mentions: "weichang.chen"
