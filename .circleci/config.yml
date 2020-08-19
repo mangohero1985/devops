@@ -31,7 +31,7 @@ jobs:
       - run:
           name: coverage check
           command: |
-            ${COVERAGE_PATH} report -m --incliude=./*
+            ${COVERAGE_PATH} report -m --include=./*
             ${COVERAGE_PATH} html
       - store_artifacts:
           path: ./htmlcov
