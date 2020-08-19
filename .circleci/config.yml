@@ -5,8 +5,8 @@ executors:
         docker:
             - image: databricksruntime/python-virtualenv:latest
         environment: 
-            PYTHON_PATH: /databricks/conda/envs/dcs-minimal/bin/python3
-            PIP_PATH: /databricks/conda/envs/dcs-minimal/bin/pip
+            PYTHON_PATH: /databricks/python3/bin/python
+            PIP_PATH: /databricks/python3/bin/pip
 
 
 jobs:
