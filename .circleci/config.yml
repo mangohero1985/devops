@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.4.2
+  codecov: codecov/codecov@1.0.2
 
 executors:
   databricks:
@@ -19,12 +20,6 @@ jobs:
     working_directory: ~/test
     steps:
       - checkout
-      - slack/status:
-          mentions: "weichang.chen"
-          success_message: ':circleci-pass: $CIRCLE_BRANCH passed \n:github: User：$CIRCLE_USERNAME'
-          failure_message: ':circleci-fail: $CIRCLE_BRANCH failed \n:github: User：$CIRCLE_USERNAME'
-          webhook: '${SLACK_WEBHOOK}'
-
       - run:
           name: unittest
           command: |
@@ -32,6 +27,16 @@ jobs:
             ${PIP_PATH} install -r requirements.txt --quiet
             ${PIP_PATH} list
             ${PYTHON_PATH} -m unittest discover -v
+      - codecov/upload:
+          file: coverage.xml
+          flags: backend
+
+      - slack/status:
+          mentions: "weichang.chen"
+          success_message: ':circleci-pass: $CIRCLE_BRANCH passed \n:github: User：$CIRCLE_USERNAME'
+          failure_message: ':circleci-fail: $CIRCLE_BRANCH failed \n:github: User：$CIRCLE_USERNAME'
+          webhook: '${SLACK_WEBHOOK}'
+
 
 workflows:
   main:
