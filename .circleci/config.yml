@@ -22,7 +22,7 @@ jobs:
           color: "#42e2f4"
           mentions: "weichang.chen"
           message: A custom message to notify the channel about the latest build
-          webhook: https://hooks.slack.com/services/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
+          webhook: '${SLACK_WEBHOOK}'
       - run:
           name: unittest
           command: |
