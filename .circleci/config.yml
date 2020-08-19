@@ -19,14 +19,10 @@ jobs:
     working_directory: ~/test
     steps:
       - checkout
-      - slack/notify:
-          color: "#42e2f4"
-          mentions: "weichang.chen"
-          message: A custom message to notify the channel about the latest build
-          webhook: '${SLACK_WEBHOOK}'
       - slack/status:
-          success_message: ':circleci-pass: $CIRCLE_BRANCH passed \n:github_octocat: User：$CIRCLE_USERNAME'
-          failure_message: ':circleci-fail: $CIRCLE_BRANCH failed \n:github_octocat: User：$CIRCLE_USERNAME'
+          mentions: "weichang.chen"
+          success_message: ':circleci-pass: $CIRCLE_BRANCH passed \n:github: User：$CIRCLE_USERNAME'
+          failure_message: ':circleci-fail: $CIRCLE_BRANCH failed \n:github: User：$CIRCLE_USERNAME'
           webhook: '${SLACK_WEBHOOK}'
 
       - run:
