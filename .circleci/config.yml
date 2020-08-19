@@ -3,7 +3,7 @@ version: 2.1
 executors:
     databricks:
         docker:
-            - image: databricksruntime/standard:latest
+            - image: databricksruntime/python-virtualenv:latest
         environment: 
             PYTHON_PATH: /databricks/conda/envs/dcs-minimal/bin/python3
             PIP_PATH: /databricks/conda/envs/dcs-minimal/bin/pip
