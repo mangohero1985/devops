@@ -20,7 +20,7 @@ jobs:
             command: |
                 ${PIP_PATH} list
                 ${PIP_PATH} install -r requirements.txt
-                ${PYTHON_PATH} -m unittest discover -v
+                ${PYTHON_PATH} -m unittest discover -v -s tests
             
 
 workflows:
