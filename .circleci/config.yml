@@ -15,12 +15,11 @@ jobs:
         working_directory: ~/test
         steps:
          - checkout
-         - install-deps
          - run:
             name: unittest
             command: |
                 ${PIP_PATH} list
-                #${PIP_PATH} install -r requirements.txt
+                ${PIP_PATH} install -r requirements.txt
                 ${PYTHON_PATH} -m unittest discover -v
             
 
