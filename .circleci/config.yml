@@ -1,34 +1,42 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@3.4.2
+
 executors:
-    databricks:
-        docker:
-            - image: databricksruntime/python-virtualenv:latest
-        environment: 
-            PYTHON_PATH: /databricks/python3/bin/python3
-            PIP_PATH: /databricks/python3/bin/pip
+  databricks:
+    docker:
+      - image: databricksruntime/python-virtualenv:latest
+    environment:
+      PYTHON_PATH: /databricks/python3/bin/python3
+      PIP_PATH: /databricks/python3/bin/pip
 
 
 jobs:
-    build-and-test:
-        executor: databricks
-        working_directory: ~/test
-        steps:
-         - checkout
-         - run:
-            name: unittest
-            command: |
-                ${PIP_PATH} install --upgrade pip --quiet
-                ${PIP_PATH} install -r requirements.txt --quiet
-                ${PIP_PATH} list
-                ${PYTHON_PATH} -m unittest discover -v             
+  build-and-test:
+    executor: databricks
+    working_directory: ~/test
+    steps:
+      - checkout
+      - slack/notify:
+          color: "#42e2f4"
+          mentions: "weichang.chen"
+          message: A custom message to notify the channel about the latest build
+          webhook: SLACK_WEBHOOK
+      - run:
+          name: unittest
+          command: |
+            ${PIP_PATH} install --upgrade pip --quiet
+            ${PIP_PATH} install -r requirements.txt --quiet
+            ${PIP_PATH} list
+            ${PYTHON_PATH} -m unittest discover -v
 
 workflows:
-    main:
-        jobs:
-            - build-and-test:
-                filters:
-                    branches:
-                        only:
-                            dev
+  main:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              only:
+                dev
                                                                                                                                         
