@@ -7,7 +7,7 @@ class Vehicle(object):
             print("A car is moving")
         else:
             pass
-    
+
     def stop(self):
         if self.speed == 0:
             print("A car stops")
