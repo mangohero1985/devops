@@ -24,8 +24,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install requirments
+          command: |
+            ${PIP_PATH} install --upgrade pip --quiet
+            ${PIP_PATH} install -r requirements.txt --quiet
+            ${PIP_PATH} list
+      - run:
           name: code formatrer and syntax check
-          commond: |
+          command: |
             ${BLACK_PATH} ./*.py
       - run:
           name: coding convention check
@@ -37,9 +43,6 @@ jobs:
       - run:
           name: unittest
           command: |
-            ${PIP_PATH} install --upgrade pip --quiet
-            ${PIP_PATH} install -r requirements.txt --quiet
-            ${PIP_PATH} list
             ${COVERAGE_PATH} run -m unittest discover -v -s .
       - run:
           name: coverage check
