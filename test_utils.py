@@ -1,13 +1,12 @@
-from BaseTest import PysparkTestCase
-import utils
-
-import pyspark.sql.types as T
-import pyspark.sql.functions as F
-
 import pandas as pd
+import pyspark.sql.functions as F
+import pyspark.sql.types as T
 
+import utils
+from BaseTest import PysparkTestCase
 
 print("test utils")
+
 
 class UtilsTest(PysparkTestCase):
     def test_compute_similarity(self):

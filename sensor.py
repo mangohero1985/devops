@@ -1,5 +1,7 @@
 from vehicle import Vehicle
 from person import Person
+
+
 class Sensor(object):
     def __init__(self):
         self.car = Vehicle()
