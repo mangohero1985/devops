@@ -34,13 +34,6 @@ jobs:
           command: |
             ${BLACK_PATH} ./*.py
       - run:
-          name: coding convention check
-          command: |
-            ${PYLINT_PATH} --output-format=parseable \
-                           --disable=missing-docstring -rn \
-                           --msg-template="{abspath}:{line}: [{msg_id}({symbol}), {obj}] {msg}" \
-                           ./*.py > ./htmlcov/pylint.txt
-      - run:
           name: unittest
           command: |
             ${COVERAGE_PATH} run -m unittest discover -v -s .
@@ -50,7 +43,13 @@ jobs:
             ${COVERAGE_PATH} report -m --include=./*
             ${COVERAGE_PATH} html --include=./*
             ${COVERAGE_PATH} xml --include=./* -o htmlcov/coverage.xml
-
+      - run:
+          name: coding convention check
+          command: |
+            ${PYLINT_PATH} --output-format=parseable \
+                           --disable=missing-docstring -rn \
+                           --msg-template="{abspath}:{line}: [{msg_id}({symbol}), {obj}] {msg}" \
+                           ./*.py > ./htmlcov/pylint.txt
       - store_artifacts:
           path: ./htmlcov
       - codecov/upload:
