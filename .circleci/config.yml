@@ -8,7 +8,7 @@ executors:
   databricks:
     docker:
       #- image: databricksruntime/python-virtualenv:latest
-      - image: mangohero1985/custom_databricks:latest
+      - image: mangohero1985/custom_databricks:3.7
     environment:
       PYTHON_PATH: /databricks/python3/bin/python3
       PIP_PATH: /databricks/python3/bin/pip
