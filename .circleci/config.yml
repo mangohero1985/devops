@@ -48,8 +48,9 @@ jobs:
           command: |
             ${PYLINT_PATH} --output-format=parseable \
                            --disable=missing-docstring -rn \
+                           --exit-zero \
                            --msg-template="{abspath}:{line}: [{msg_id}({symbol}), {obj}] {msg}" \
-                           ./*.py
+                           ./*.py > ./htmlcov/pylint.txt
       - store_artifacts:
           path: ./htmlcov
       - codecov/upload:
