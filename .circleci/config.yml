@@ -30,7 +30,8 @@ commands:
       - run:
           name: install databricks-cli
           command: |
-            sudo pip install databricks-cli
+            sudo pip install databricks-cli \
+            sudo chmod 755 ./databricks_cli_config.sh ${DATABRICKS_HOST} ${DATABRICKS_TOKEN} \
 
 
 jobs:
@@ -93,7 +94,7 @@ jobs:
 
 
 workflows:
-  main:
+  CICD:
     jobs:
       - build-and-test:
           filters:
@@ -102,6 +103,8 @@ workflows:
                 - dev
                 - master
       - deploy:
+          requires:
+            - build-and-test
           filters:
             branches:
               only:
