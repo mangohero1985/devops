@@ -31,7 +31,7 @@ commands:
           name: install databricks-cli
           command: |
             /databricks/python3/bin/pip install databricks-cli \
-            sudo chmod +x ./databricks_cli_config.sh \
+            sudo chmod 755 ./databricks_cli_config.sh \
             ./databricks_cli_config.sh ${DATABRICKS_HOST} ${DATABRICKS_TOKEN} \
 
 
@@ -78,8 +78,8 @@ jobs:
 
       - slack/status:
           mentions: "weichang.chen"
-          success_message: ':circleci-pass: $CIRCLE_BRANCH passed \n:github: User：$CIRCLE_USERNAME'
-          failure_message: ':circleci-fail: $CIRCLE_BRANCH failed \n:github: User：$CIRCLE_USERNAME'
+          success_message: ':circleci-pass: $CIRCLE_BRANCH was built successfully \n:github: User：$CIRCLE_USERNAME'
+          failure_message: ':circleci-fail: $CIRCLE_BRANCH was built failedly \n:github: User：$CIRCLE_USERNAME'
           webhook: '${SLACK_WEBHOOK}'
 
   deploy:
