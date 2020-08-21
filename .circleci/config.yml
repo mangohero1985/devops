@@ -7,7 +7,6 @@ orbs:
 executors:
   databricks:
     docker:
-      #- image: databricksruntime/python-virtualenv:latest
       - image: mangohero1985/custom_databricks:3.7
     environment:
       PYTHON_PATH: /databricks/python3/bin/python3
@@ -21,7 +20,6 @@ executors:
       - image: circleci/python:3.7.5
     environment:
       DEPLOY_DIR: /Users/weichang.chen@supership.jp/tmp/devops/
-#      DATABRICKS_CLI: /databricks/python3/bin/databricks
 
 commands:
   install_databricks_cli:
@@ -93,20 +91,25 @@ jobs:
           command: |
             databricks workspace delete -r $DEPLOY_DIR
             databricks workspace import_dir -e -o ./ $DEPLOY_DIR
+      - slack/status:
+          mentions: "weichang.chen"
+          success_message: ':circleci-pass: $CIRCLE_BRANCH was deployed successfully \n:github: User：$CIRCLE_USERNAME'
+          failure_message: ':circleci-fail: $CIRCLE_BRANCH was deployed abortively \n:github: User：$CIRCLE_USERNAME'
+          webhook: '${SLACK_WEBHOOK}'
 
 
 workflows:
   CICD:
     jobs:
-#      - build-and-test:
-#          filters:
-#            branches:
-#              only:
-#                - dev
-#                - master
+      - build-and-test:
+          filters:
+            branches:
+              only:
+                - dev
+                - master
       - deploy:
-#          requires:
-#            - build-and-test
+          requires:
+            - build-and-test
           filters:
             branches:
               only:
