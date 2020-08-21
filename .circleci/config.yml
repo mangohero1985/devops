@@ -30,7 +30,7 @@ commands:
       - run:
           name: install databricks-cli
           command: |
-            sudo python install databricks-cli
+            sudo pip install databricks-cli
 
 
 jobs:
