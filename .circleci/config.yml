@@ -31,7 +31,8 @@ commands:
           name: install databricks-cli
           command: |
             sudo pip install databricks-cli \
-            sudo chmod 755 ./databricks_cli_config.sh ${DATABRICKS_HOST} ${DATABRICKS_TOKEN} \
+            sudo chmod +x ./databricks_cli_config.sh \
+            ./databricks_cli_config.sh ${DATABRICKS_HOST} ${DATABRICKS_TOKEN} \
 
 
 jobs:
