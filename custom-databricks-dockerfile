@@ -1,0 +1,39 @@
+# The minimal image defines the minimum requirements to run a Docker image in Databricks.
+# If you are building your own image from scratch, make sure you have the libraries
+# included below.
+
+FROM ubuntu:18.04
+
+RUN apt update \
+  && apt install --yes \
+    bash \
+   	openjdk-8-jdk \
+    iproute2 \
+    bash \
+    sudo \
+    coreutils \
+    procps \
+    python3.7 \
+    virtualenv \
+	curl \
+  && /var/lib/dpkg/info/ca-certificates-java.postinst configure \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Initialize the default environment that Spark and notebooks will use
+RUN virtualenv -p python3.7 --system-site-packages /databricks/python3
+
+# These python libraries are used by Databricks notebooks and the Python REPL
+# You do not need to install pyspark - it is injected when the cluster is launched
+RUN /databricks/python3/bin/pip install \
+  six==1.12.0 \
+  ipython==7.2.0 \
+  numpy==1.15.4 \
+  pandas==0.23.4 \
+  pyarrow==0.12.0 \
+  matplotlib==3.0.2 \
+  jinja2==2.10 \
+  pyspark==3.0.0
+
+# Specifies where Spark will look for the python process
+ENV PYSPARK_PYTHON=/databricks/python3/bin/python3
