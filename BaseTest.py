@@ -8,22 +8,20 @@ from pyspark.sql import SparkSession
 
 
 class PysparkTestCase(unittest.TestCase):
-
     @classmethod
     def suppress_py4j_logging(cls):
         warnings.filterwarnings(
-            action="ignore",
-            message="unclosed",
-            category=ResourceWarning)
+            action="ignore", message="unclosed", category=ResourceWarning
+        )
         logger = logging.getLogger("py4j")
         logger.setLevel(logging.ERROR)
 
     @classmethod
     def setUpClass(cls):
         cls.suppress_py4j_logging()
-        cls.spark = SparkSession.builder.master('local[2]').getOrCreate()
-        cls.spark.sparkContext.setLogLevel('WARN')
-        for file in glob.glob('/home/jovyan/tests/*.py'):
+        cls.spark = SparkSession.builder.master("local[2]").getOrCreate()
+        cls.spark.sparkContext.setLogLevel("WARN")
+        for file in glob.glob("/home/jovyan/tests/*.py"):
             cls.spark.sparkContext.addPyFile(file)
 
     @classmethod
@@ -43,5 +41,5 @@ class PysparkTestCase(unittest.TestCase):
         return True
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

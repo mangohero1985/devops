@@ -3,6 +3,7 @@ from sensor import Sensor
 from person import Person
 from vehicle import Vehicle
 
+
 class SensorTest(unittest.TestCase):
     def setUp(self):
         self.sensor = Sensor()
