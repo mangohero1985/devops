@@ -16,6 +16,22 @@ executors:
       PYLINT_PATH: /databricks/python3/bin/pylint
       BLACK_PATH: /databricks/python3/bin/black
 
+  python:
+    docker:
+      - image: circleci/python:3.7.5
+    environment:
+      DATABRICKS_HOST: https://supership.cloud.databricks.com
+      DEPLOY_DIR: /user/weichang.chen@supership.jp/tmp/devops/
+
+commands:
+  install_databricks_cli:
+    description: "install and configure databricks-cli"
+    steps:
+      - run:
+          name: install databricks-cli
+          command: |
+            sudo python install databricks-cli
+
 
 jobs:
   build-and-test:
@@ -64,6 +80,17 @@ jobs:
           failure_message: ':circleci-fail: $CIRCLE_BRANCH failed \n:github: User：$CIRCLE_USERNAME'
           webhook: '${SLACK_WEBHOOK}'
 
+  deploy:
+    executor: python
+    steps:
+      - checkout
+      - install_databricks_cli
+      - run:
+          name: deploy
+          command: |
+            databricks workspace delete -r $DEPLOY_DIR
+            databricks workspace import_dir -e -o ./ $DEPLOY_DIR
+
 
 workflows:
   main:
@@ -74,4 +101,11 @@ workflows:
               only:
                 - dev
                 - master
+      - deploy:
+          filters:
+            branches:
+              only:
+                - dev
+                - master
+
                                                                                                                                         
