@@ -18,10 +18,10 @@ executors:
 
   python:
     docker:
-      - image: circleci/python:3.7.5
+      - image: mangohero1985/custom_databricks:3.7
     environment:
-      DATABRICKS_HOST: https://supership.cloud.databricks.com
       DEPLOY_DIR: /user/weichang.chen@supership.jp/tmp/devops/
+      DATABRICKS_CLI: /databricks/python3/bin/databricks
 
 commands:
   install_databricks_cli:
@@ -30,7 +30,8 @@ commands:
       - run:
           name: install databricks-cli
           command: |
-            sudo pip install databricks-cli \
+            /databricks/python3/bin/python3 install databricks-cli \
+            chmod +x ./databricks_cli_config.sh
             ./databricks_cli_config.sh ${DATABRICKS_HOST} ${DATABRICKS_TOKEN} \
 
 
@@ -89,8 +90,8 @@ jobs:
       - run:
           name: deploy
           command: |
-            databricks workspace delete -r $DEPLOY_DIR
-            databricks workspace import_dir -e -o ./ $DEPLOY_DIR
+            ${DATABRICKS_CLI} workspace delete -r $DEPLOY_DIR
+            ${DATABRICKS_CLI} workspace import_dir -e -o ./ $DEPLOY_DIR
 
 
 workflows:
